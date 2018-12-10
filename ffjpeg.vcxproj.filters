@@ -15,31 +15,31 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="bitstr.c">
+    <ClCompile Include="ffjpeg.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="bmp.c">
+    <ClCompile Include="jfif.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="color.c">
+    <ClCompile Include="bmp.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="dct.c">
+    <ClCompile Include="bitstr.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ffjpeg.c">
+    <ClCompile Include="color.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="huffman.c">
+    <ClCompile Include="dct.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="jfif.c">
+    <ClCompile Include="huffman.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="quant.c">
+    <ClCompile Include="quant.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="zigzag.c">
+    <ClCompile Include="zigzag.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

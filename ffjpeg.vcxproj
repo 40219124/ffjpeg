@@ -147,15 +147,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="bitstr.c" />
-    <ClCompile Include="bmp.c" />
-    <ClCompile Include="color.c" />
-    <ClCompile Include="dct.c" />
-    <ClCompile Include="ffjpeg.c" />
-    <ClCompile Include="huffman.c" />
-    <ClCompile Include="jfif.c" />
-    <ClCompile Include="quant.c" />
-    <ClCompile Include="zigzag.c" />
+    <ClCompile Include="bitstr.cpp" />
+    <ClCompile Include="bmp.cpp" />
+    <ClCompile Include="color.cpp" />
+    <ClCompile Include="dct.cpp" />
+    <ClCompile Include="ffjpeg.cpp" />
+    <ClCompile Include="huffman.cpp" />
+    <ClCompile Include="jfif.cpp" />
+    <ClCompile Include="quant.cpp" />
+    <ClCompile Include="zigzag.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="bitstr.h" />
