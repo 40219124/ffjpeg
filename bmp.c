@@ -42,7 +42,7 @@ int bmp_load(BMP *pb, char *file)
     BYTE         *pdata  = NULL;
     int           i;
 
-    fp = fopen(file, "rb");
+	fopen_s(&fp, file, "rb");
     if (!fp) return -1;
 
     fread(&header, sizeof(header), 1, fp);
@@ -88,7 +88,7 @@ int bmp_save(BMP *pb, char *file)
     header.biBitCount = 24;
     header.biSizeImage= pb->stride * pb->height;
 
-    fp = fopen(file, "wb");
+	fopen_s(&fp, file, "wb");
     if (fp) {
         fwrite(&header, sizeof(header), 1, fp);
         pdata = (BYTE*)pb->pdata + pb->stride * pb->height;

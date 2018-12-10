@@ -100,7 +100,7 @@ static void* fbitstr_open(char *file, char *mode)
     if (!context) return NULL;
 
     context->type = BITSTR_FILE;
-    context->fp   = fopen(file, mode);
+	fopen_s(&(context->fp), file, mode);
     if (!context->fp) {
         free(context);
         return NULL;

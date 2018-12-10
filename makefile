@@ -1,18 +1,20 @@
 # makefile for ffjpeg project
 # written by rockcarry
 
-CC      = gcc
-CCFLAGS = -Wall
+CC      = cl.exe
+# CCFLAGS = -Wall
 
-OBJS = \
-    color.o   \
-    dct.o     \
-    quant.o   \
-    zigzag.o  \
-    bitstr.o  \
-    huffman.o \
-    bmp.o     \
-    jfif.o
+LINK = link.exe
+
+# OBJS = \
+    # color.o   \
+    # dct.o     \
+    # quant.o   \
+    # zigzag.o  \
+    # bitstr.o  \
+    # huffman.o \
+    # bmp.o     \
+    # jfif.o
 
 EXES = \
     ffjpeg.exe \

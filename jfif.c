@@ -155,7 +155,7 @@ void* jfif_load(char *file)
     buf  = calloc(1, 0x10000);
     if (!jfif || !buf) goto done;
 
-    fp = fopen(file, "rb");
+    fopen_s(&fp, file, "rb");
     if (!fp) goto done;
 
     while (1) {
@@ -271,7 +271,7 @@ int jfif_save(void *ctxt, char *file)
     int   i, j;
     int   ret  = -1;
 
-    fp = fopen(file, "wb");
+	fopen_s(&fp, file, "wb");
     if (!fp) goto done;
 
     // output SOI
