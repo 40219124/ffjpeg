@@ -4,6 +4,11 @@
 #include <string.h>
 #include "jfif.h"
 #include "bmp.h"
+#include <fstream>
+#include <chrono>
+
+using namespace std;
+using namespace chrono;
 
 int main(int argc, char *argv[])
 {
@@ -19,7 +24,12 @@ int main(int argc, char *argv[])
         );
         return 0;
     }
-	for (int i = 0; i < 1; ++i) {
+
+	ofstream times;
+	times.open("timings.csv", ios_base::out | ios_base::trunc);
+	double total = 0;
+	int loops = 500;
+	for (int i = 0; i < loops; i++) {
 		if (strcmp(argv[1], "-d") == 0) {
 			jfif = jfif_load(argv[2]);
 			jfif_decode(jfif, &bmp);
@@ -29,12 +39,21 @@ int main(int argc, char *argv[])
 		}
 		else if (strcmp(argv[1], "-e") == 0) {
 			bmp_load(&bmp, argv[2]);
+			system_clock::time_point start = chrono::system_clock::now();
 			jfif = jfif_encode(&bmp);
+			system_clock::time_point end = chrono::system_clock::now();
+			duration<double> diff = end - start;
+			total += diff.count();
+			times << diff.count() << endl;
 			bmp_free(&bmp);
 			jfif_save(jfif, "encode.jpg");
 			jfif_free(jfif);
 		}
 	}
+	total /= (double)loops;
+	times << "avg" << endl << total << endl;
+
+	times.close();
 
     return 0;
 }
