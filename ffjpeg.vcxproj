@@ -144,6 +144,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <FullProgramDatabaseFile>true</FullProgramDatabaseFile>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -154,6 +155,7 @@
     <ClCompile Include="ffjpeg.cpp" />
     <ClCompile Include="huffman.cpp" />
     <ClCompile Include="jfif.cpp" />
+    <ClCompile Include="ParallelHelp.cpp" />
     <ClCompile Include="quant.cpp" />
     <ClCompile Include="zigzag.cpp" />
   </ItemGroup>
@@ -164,6 +166,7 @@
     <ClInclude Include="dct.h" />
     <ClInclude Include="huffman.h" />
     <ClInclude Include="jfif.h" />
+    <ClInclude Include="ParallelHelp.h" />
     <ClInclude Include="quant.h" />
     <ClInclude Include="stdefine.h" />
     <ClInclude Include="zigzag.h" />

@@ -592,6 +592,7 @@ static void jfif_encode_du(JFIF *jfif, int type, int du[64], int *dc)
     // fdct
     fdct2d8x8(du, NULL);
 
+	// --- should be easy parallel
     // quant
     quant_encode(du, pqtab);
 
@@ -743,8 +744,11 @@ void* jfif_encode(BMP *pb)
     ydst = yuv_datbuf[0];
     udst = yuv_datbuf[1];
     vdst = yuv_datbuf[2];
+	// --- Also in pairs for same reason
     for (i=0; i<pb->height; i++) {
+		// --- Do in pairs because of if statement
         for (j=0; j<pb->width; j++) {
+			// --- only significant line that's not encoding du. Can probably just async this function
             rgb_to_yuv(bsrc[2], bsrc[1], bsrc[0], ydst, udst, vdst);
             bsrc += 3;
             ydst += 1;
