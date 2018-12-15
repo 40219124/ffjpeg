@@ -1,5 +1,6 @@
 /* 包含头文件 */
 #include "quant.h"
+#include "ParallelHelp.h"
 
 /* 全局变量定义 */
 const int STD_QUANT_TAB_LUMIN[64] =
@@ -30,7 +31,10 @@ const int STD_QUANT_TAB_CHROM[64] =
 /* 函数实现 */
 void quant_encode(int du[64], int qtab[64])
 {
-    int i; for (i=0; i<64; i++) du[i] /= qtab[i];
+#pragma omp parallel for num_threads(ParallelHelp::ThreadCount()) 
+	for (int i = 0; i < 64; i++) {
+		du[i] /= qtab[i];
+	}
 }
 
 void quant_decode(int du[64], int qtab[64])
