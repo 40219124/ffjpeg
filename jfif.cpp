@@ -11,6 +11,9 @@
 #include "bmp.h"
 #include "color.h"
 #include "jfif.h"
+#include "ParallelHelp.h"
+
+using namespace std;
 
 // Ô¤±àÒë¿ª¹Ø
 #define DEBUG_JFIF  0
@@ -746,8 +749,17 @@ void* jfif_encode(BMP *pb)
     vdst = yuv_datbuf[2];
 	// --- Also in pairs for same reason
     for (i=0; i<pb->height; i++) {
+		bool firstWidth = true;
+#pragma omp parallel for num_threads(ParallelHelp::ThreadCount()) shared(i) firstprivate(bsrc, ydst, udst, vdst, j, firstWidth)
 		// --- Do in pairs because of if statement
         for (j=0; j<pb->width; j++) {
+			if (firstWidth) {
+				firstWidth = false;
+				bsrc += j * 3;
+				ydst += j;
+				udst += (j + 1) / 2;
+				vdst += (j + 1) / 2;
+			}
 			// --- only significant line that's not encoding du. Can probably just async this function
             rgb_to_yuv(bsrc[2], bsrc[1], bsrc[0], ydst, udst, vdst);
             bsrc += 3;
