@@ -11,6 +11,11 @@
 #include "bmp.h"
 #include "color.h"
 #include "jfif.h"
+#include "ParallelHelp.h"
+#include <thread>
+#include <queue>
+
+using namespace std;
 
 // Ô¤±àÒë¿ª¹Ø
 #define DEBUG_JFIF  0
@@ -656,6 +661,8 @@ void* jfif_encode(BMP *pb)
     int   i, j, m, n;
     int   failed = 1;
 
+	queue<thread> threads;
+
     // check input params
     if (!pb) {
         printf("invalid input params !\n");
@@ -744,12 +751,17 @@ void* jfif_encode(BMP *pb)
     ydst = yuv_datbuf[0];
     udst = yuv_datbuf[1];
     vdst = yuv_datbuf[2];
+
 	// --- Also in pairs for same reason
     for (i=0; i<pb->height; i++) {
 		// --- Do in pairs because of if statement
         for (j=0; j<pb->width; j++) {
+			if (threads.size() == ParallelHelp::ThreadCount()) {
+				threads.front().join();
+				threads.pop();
+			}
 			// --- only significant line that's not encoding du. Can probably just async this function
-            rgb_to_yuv(bsrc[2], bsrc[1], bsrc[0], ydst, udst, vdst);
+            threads.push(thread(rgb_to_yuv, bsrc[2], bsrc[1], bsrc[0], ydst, udst, vdst));
             bsrc += 3;
             ydst += 1;
             if (j & 1) {
@@ -757,6 +769,11 @@ void* jfif_encode(BMP *pb)
                 vdst += 1;
             }
         }
+		while (threads.size() != 0)
+		{
+			threads.front().join();
+			threads.pop();
+		}
         bsrc -= pb->width * 3; bsrc += pb->stride;
         ydst -= pb->width * 1; ydst += jw;
         udst -= pb->width / 2;

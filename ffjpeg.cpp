@@ -28,7 +28,7 @@ int main(int argc, char *argv[])
 	ofstream times;
 	times.open("timings.csv", ios_base::out | ios_base::trunc);
 	double total = 0;
-	int loops = 500;
+	int loops = 1;
 	for (int i = 0; i < loops; i++) {
 		if (strcmp(argv[1], "-d") == 0) {
 			jfif = jfif_load(argv[2]);
