@@ -767,7 +767,12 @@ void* jfif_encode(BMP *pb)
 				futes.pop();
 			}
 			// --- only significant line that's not encoding du. Can probably just async this function
-			futes.push(async(rgb_to_yuv, bsrc[2], bsrc[1], bsrc[0], ydst, udst, vdst));
+			if (futes.size() == ParallelHelp::ThreadCount() - 1) {
+				rgb_to_yuv(bsrc[2], bsrc[1], bsrc[0], ydst, udst, vdst);
+			}
+			else {
+				futes.push(async(rgb_to_yuv, bsrc[2], bsrc[1], bsrc[0], ydst, udst, vdst));
+			}
 			bsrc += 3;
 			ydst += 1;
 			if (j & 1) {
