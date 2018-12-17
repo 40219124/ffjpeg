@@ -760,9 +760,8 @@ void* jfif_encode(BMP *pb)
 	for (i = 0; i < pb->height; i++) {
 		// --- Do in pairs because of if statement
 		for (j = 0; j < pb->width; j++) {
-			if (futes.size() != 0 &&
-				(futes.size() == ParallelHelp::ThreadCount() - 1 ||
-					futes.front().wait_for(std::chrono::seconds(0)) == future_status::ready)) {
+			if (futes.size() &&
+					futes.front().wait_for(std::chrono::seconds(0)) == future_status::ready) {
 				futes.front().get();
 				futes.pop();
 			}
