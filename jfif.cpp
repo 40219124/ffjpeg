@@ -601,7 +601,6 @@ static void jfif_encode_du(JFIF *jfif, int type, int du[64], int *dc)
 	// fdct
 	fdct2d8x8(du, NULL);
 
-	// --- should be easy parallel
 	// quant
 	quant_encode(du, pqtab);
 
@@ -756,22 +755,21 @@ void* jfif_encode(BMP *pb)
 	ydst = yuv_datbuf[0];
 	udst = yuv_datbuf[1];
 	vdst = yuv_datbuf[2];
-	// --- Also in pairs for same reason
 	for (i = 0; i < pb->height; i++) {
-		// --- Do in pairs because of if statement
 		for (j = 0; j < pb->width; j++) {
+			// -+- start my code
 			if (futes.size() &&
 					futes.front().wait_for(std::chrono::seconds(0)) == future_status::ready) {
 				futes.front().get();
 				futes.pop();
 			}
-			// --- only significant line that's not encoding du. Can probably just async this function
 			if (futes.size() == ParallelHelp::ThreadCount() - 1) {
 				rgb_to_yuv(bsrc[2], bsrc[1], bsrc[0], ydst, udst, vdst);
 			}
 			else {
 				futes.push(async(rgb_to_yuv, bsrc[2], bsrc[1], bsrc[0], ydst, udst, vdst));
 			}
+			// -+- end my code
 			bsrc += 3;
 			ydst += 1;
 			if (j & 1) {
